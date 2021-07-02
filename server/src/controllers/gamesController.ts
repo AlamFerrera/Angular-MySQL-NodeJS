@@ -7,6 +7,18 @@ class GamesController {
 
         res.send("En routes games.ts");
     }
+
+    public create(req:Request, res:Response){
+        res.json('creating game');
+    }
+
+    public delete(req:Request, res:Response){
+        res.json({text:'deleting game'});
+    }
+
+    public update(req:Request, res:Response){
+        res.json({text:'updating game'});
+    }
 }
 
 export const gamesController = new GamesController();
