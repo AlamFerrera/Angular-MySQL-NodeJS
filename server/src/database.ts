@@ -1,10 +1,14 @@
 import mysql from 'mysql';
+//import { createPool } from 'promise-mysql';
+const {promisify} = require('util');
 import keys from './keys';
 
 const pool = mysql.createPool(keys.database);
+/*pool.getConnection((connection) => {
+    connection.releaseConnection(connection);
+})*/
 
-
-pool.getConnection((err:any, conn:any) => {
+pool.getConnection((err:any, conn) => {
     if(err){
         if(err.code === 'PROTOCOL_CONNECTION_LOST'){
             console.error('DATABASE CONNECTION WAS CLOSED');
@@ -23,5 +27,8 @@ pool.getConnection((err:any, conn:any) => {
     }
     return;
 });
+
+//para convertir las consultas en promesas
+pool.query = promisify(pool.query);
 
 export default pool;

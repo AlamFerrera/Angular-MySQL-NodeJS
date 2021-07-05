@@ -4,8 +4,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mysql_1 = __importDefault(require("mysql"));
+//import { createPool } from 'promise-mysql';
+const { promisify } = require('util');
 const keys_1 = __importDefault(require("./keys"));
 const pool = mysql_1.default.createPool(keys_1.default.database);
+/*pool.getConnection((connection) => {
+    connection.releaseConnection(connection);
+})*/
 pool.getConnection((err, conn) => {
     if (err) {
         if (err.code === 'PROTOCOL_CONNECTION_LOST') {
@@ -24,4 +29,6 @@ pool.getConnection((err, conn) => {
     }
     return;
 });
+//para convertir las consultas en promesas
+pool.query = promisify(pool.query);
 exports.default = pool;
