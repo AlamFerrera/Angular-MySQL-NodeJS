@@ -11,7 +11,7 @@
             <div class="form-group">
               <input type="url" [(ngModel)] ="game.imagen" name="imagen" placeholder="url imagen" class="form-control" >
             </div>
-            <button (click) ="edit ? updateGame() : saveNewGame()" class="btn btn-success btn-block">{{edit? 'Modificar' : 'Guardar'}}</button>
+            <button (click)="edit ? updateGame() : saveNewGame()" class="btn btn-success btn-block">{{edit? 'Modificar' : 'Guardar'}}</button>
         </form>
       </div>
     </div>

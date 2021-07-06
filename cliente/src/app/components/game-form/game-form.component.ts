@@ -24,10 +24,16 @@ export class GameFormComponent implements OnInit {
   ngOnInit(): void {
     const params = this.rutaActiva.snapshot.params;
     if(params.id){
+    //  console.log(params.id);
       this.gameService.getOneGame(params.id).subscribe(
         res => {
-          console.log(res);
-          this.game=res;
+          this.game = {
+            id: res[0].id,
+            title: res[0].title,
+            descripcion: res[0].descripcion,
+            imagen: res[0].imagen,
+            created_at: res[0].created_at
+          }
           this.edit = true;
         },
         err => console.log(err)
@@ -49,11 +55,9 @@ export class GameFormComponent implements OnInit {
 
   updateGame(){
     delete this.game.created_at;
-
+    const params = this.rutaActiva.snapshot.params;
     this.gameService.updateGame(this.game.id, this.game).subscribe(
       res => {
-        console.log("update");
-        console.log(res);
         this.ruta.navigate(['/games']);
       },
       err => console.log(err)
